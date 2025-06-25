@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# ==== Mau sac ====
+BOLD='\e[1m'
+YELLOW='\e[93m'
+CYAN='\e[96m'
+GREEN='\e[92m'
+RESET='\e[0m'
+
+# ==== Ham go dong ====
+typing_line() {
+    while IFS= read -r line; do
+        echo -e "${YELLOW}${BOLD}$line${RESET}"
+        sleep 0.03
+    done <<< "$1"
+}
+
+# ==== Tao logo tu chu "FIX NHANH" bang pyfiglet ====
+LOGO=$(python3 -c "import pyfiglet; print(pyfiglet.figlet_format('FIX NHANH', font='slant'))")
+
+# ==== Lay thong tin ====
+HOSTNAME=$(hostname)
+UPTIME=$(uptime -p)
+IP=$(hostname -I | awk '{print $1}')
+MEM=$(free -h | awk '/Mem:/ {print $3 "/" $2}')
+DISK=$(df -h / | awk 'NR==2 {print $3 "/" $2}')
+
+# ==== In ra ====
+clear
+typing_line "$LOGO"
+echo
+echo -e "${CYAN}📡 Hostname: ${RESET}${HOSTNAME}"
+echo -e "${CYAN}⏱️  Uptime:   ${RESET}${UPTIME}"
+echo -e "${CYAN}🌐 IP Addr:  ${RESET}${IP}"
+echo -e "${CYAN}🧠 RAM:      ${RESET}${MEM}"
+echo -e "${CYAN}💾 Disk:     ${RESET}${DISK}"
+echo
+echo -e "${GREEN}${BOLD}✔️  Welcome to FIX NHANH system - Ready!${RESET}"
